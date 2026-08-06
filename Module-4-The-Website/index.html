@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Control Center</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { color: #2c3e50; }
+        .config-box {
+            background: #fff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .card h3 { margin-top: 0; color: #7f8c8d; }
+        .value { font-size: 2.2em; font-weight: bold; color: #2c3e50; }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1em;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover { background-color: #2980b9; }
+        .btn-off { background-color: #e74c3c; }
+        .btn-off:hover { background-color: #c0392b; }
+    </style>
+</head>
+<body>
+
+    <h1>🌐 IoT Dashboard</h1>
+
+    <!-- Adafruit IO Configuration -->
+    <div class="config-box">
+        <input type="text" id="username" placeholder="Adafruit Username">
+        <input type="password" id="aioKey" placeholder="Adafruit AIO Key">
+        <button class="btn" onclick="saveCredentials()">Connect</button>
+    </div>
+
+    <!-- Sensor Display Cards -->
+    <div class="grid">
+        <div class="card">
+            <h3>Temperature</h3>
+            <div class="value" id="tempVal">-- °C</div>
+        </div>
+        <div class="card">
+            <h3>Humidity</h3>
+            <div class="value" id="humVal">-- %</div>
+        </div>
+        <div class="card">
+            <h3>Light Level</h3>
+            <div class="value" id="lightVal">--</div>
+        </div>
+        <div class="card">
+            <h3>Motion Status</h3>
+            <div class="value" id="motionVal">--</div>
+        </div>
+        <div class="card" style="grid-column: 1 / -1;">
+            <h3>Remote Control</h3>
+            <button class="btn" id="lightBtn" onclick="toggleLight()">Turn LED ON</button>
+        </div>
+    </div>
+
+    <script>
+        let ledState = false;
+
+        function saveCredentials() {
+            fetchData();
+            setInterval(fetchData, 3000); // Poll feed data every 3 seconds
+        }
+
+        async function getFeedValue(feedKey) {
+            const user = document.getElementById('username').value;
+            const key = document.getElementById('aioKey').value;
+            const url = `https://io.adafruit.com/api/v2/${user}/feeds/${feedKey}/data/last`;
+            
+            try {
+                const response = await fetch(url, { headers: { 'X-AIO-Key': key } });
+                const data = await response.json();
+                return data.value;
+            } catch (err) {
+                return '--';
+            }
+        }
+
+        async function fetchData() {
+            document.getElementById('tempVal').innerText = (await getFeedValue('temperature')) + ' °C';
+            document.getElementById('humVal').innerText = (await getFeedValue('humidity')) + ' %';
+            document.getElementById('lightVal').innerText = await getFeedValue('light');
+            
+            const motion = await getFeedValue('motion');
+            document.getElementById('motionVal').innerText = motion == '1' ? '🚨 MOTION!' : 'Clear';
+        }
+
+        async function toggleLight() {
+            const user = document.getElementById('username').value;
+            const key = document.getElementById('aioKey').value;
+            const btn = document.getElementById('lightBtn');
+            
+            ledState = !ledState;
+            const payload = { value: ledState ? "1" : "0" };
+
+            await fetch(`https://io.adafruit.com/api/v2/${user}/feeds/led/data`, {
+                method: 'POST',
+                headers: {
+                    'X-AIO-Key': key,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (ledState) {
+                btn.innerText = "Turn LED OFF";
+                btn.classList.add('btn-off');
+            } else {
+                btn.innerText = "Turn LED ON";
+                btn.classList.remove('btn-off');
+            }
+        }
+    </script>
+</body>
+</html>
