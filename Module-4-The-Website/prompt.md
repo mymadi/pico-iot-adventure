@@ -1,4 +1,4 @@
-![AI Dashboard Theme Guide](https://github.com/mymadi/pico-iot-adventure/blob/main/Module-4-The-Website/AI_Dashboard_Theme_Guide%20(2).png?raw=true)
+![AI Dashboard Theme Guide](https://github.com/mymadi/pico-iot-adventure/blob/main/Module-4-The-Website/AI_Dashboard_Theme_Guide.png?raw=true)
 
 # 🎨 AI Theme Generator Guide
 
