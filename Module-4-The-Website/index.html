@@ -3,96 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IoT Control Center</title>
+    <title>Pico IoT Adventure Dashboard</title>
     <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
-        h1 { color: #2c3e50; }
-        .config-box {
-            background: #fff;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-        input {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 800px;
-        }
-        .card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+
+        .header {
             text-align: center;
+            margin-bottom: 25px;
         }
-        .card h3 { margin-top: 0; color: #7f8c8d; }
-        .value { font-size: 2.2em; font-weight: bold; color: #2c3e50; }
-        .btn {
-            background-color: #3498db;
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin: 0 0 8px 0;
+            color: var(--text-dark);
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Config Card */
+        .config-card {
+            background: var(--card-bg);
+            padding: 18px 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 760px;
+            box-sizing: border-box;
+        }
+
+        .config-card input {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            outline: none;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .config-card input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-connect {
+            background-color: var(--primary);
             color: white;
             border: none;
             padding: 12px 24px;
-            font-size: 1em;
-            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
-        .btn:hover { background-color: #2980b9; }
-        .btn-off { background-color: #e74c3c; }
-        .btn-off:hover { background-color: #c0392b; }
+
+        .btn-connect:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Main Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 760px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            background: #f8fafc;
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            flex-shrink: 0;
+        }
+
+        .card-info h3 {
+            margin: 0 0 6px 0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .card-info .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        /* Remote Control Card */
+        .control-card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            width: 100%;
+            max-width: 760px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .control-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .btn-toggle {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-toggle.active {
+            background-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+
+        .btn-toggle:hover {
+            transform: scale(1.03);
+        }
     </style>
 </head>
 <body>
 
-    <h1>🌐 IoT Dashboard</h1>
-
-    <!-- Adafruit IO Configuration -->
-    <div class="config-box">
-        <input type="text" id="username" placeholder="Adafruit Username">
-        <input type="password" id="aioKey" placeholder="Adafruit AIO Key">
-        <button class="btn" onclick="saveCredentials()">Connect</button>
+    <div class="header">
+        <h1>🌐 Pico IoT Dashboard</h1>
+        <p>Live Monitoring & Remote Control Center</p>
     </div>
 
-    <!-- Sensor Display Cards -->
-    <div class="grid">
+    <!-- Adafruit IO Credentials Form -->
+    <div class="config-card">
+        <input type="text" id="username" placeholder="Adafruit Username">
+        <input type="password" id="aioKey" placeholder="Adafruit AIO Key">
+        <button class="btn-connect" onclick="saveCredentials()">Connect Stream</button>
+    </div>
+
+    <!-- 2x2 Sensor Cards Grid -->
+    <div class="dashboard-grid">
         <div class="card">
-            <h3>Temperature</h3>
-            <div class="value" id="tempVal">-- °C</div>
+            <div class="card-icon">🌡️</div>
+            <div class="card-info">
+                <h3>Temperature</h3>
+                <div class="value" id="tempVal">-- °C</div>
+            </div>
         </div>
+
         <div class="card">
-            <h3>Humidity</h3>
-            <div class="value" id="humVal">-- %</div>
+            <div class="card-icon">💧</div>
+            <div class="card-info">
+                <h3>Humidity</h3>
+                <div class="value" id="humVal">-- %</div>
+            </div>
         </div>
+
         <div class="card">
-            <h3>Light Level</h3>
-            <div class="value" id="lightVal">--</div>
+            <div class="card-icon">☀️</div>
+            <div class="card-info">
+                <h3>Light Level</h3>
+                <div class="value" id="lightVal">--</div>
+            </div>
         </div>
+
         <div class="card">
-            <h3>Motion Status</h3>
-            <div class="value" id="motionVal">--</div>
+            <div class="card-icon">🏃</div>
+            <div class="card-info">
+                <h3>Motion Status</h3>
+                <div class="value" id="motionVal">--</div>
+            </div>
         </div>
-        <div class="card" style="grid-column: 1 / -1;">
-            <h3>Remote Control</h3>
-            <button class="btn" id="lightBtn" onclick="toggleLight()">Turn LED ON</button>
+    </div>
+
+    <!-- Actuator Control -->
+    <div class="control-card">
+        <div class="control-info">
+            <span style="font-size: 2rem;">💡</span>
+            <div>
+                <h3>Remote Light Actuator</h3>
+                <span style="font-size: 0.85rem; color: var(--text-muted);">Toggle Pi Pico On-Board LED</span>
+            </div>
         </div>
+        <button class="btn-toggle" id="lightBtn" onclick="toggleLight()">Turn LED ON</button>
     </div>
 
     <script>
@@ -100,7 +265,7 @@
 
         function saveCredentials() {
             fetchData();
-            setInterval(fetchData, 3000); // Poll feed data every 3 seconds
+            setInterval(fetchData, 3000);
         }
 
         async function getFeedValue(feedKey) {
@@ -123,7 +288,7 @@
             document.getElementById('lightVal').innerText = await getFeedValue('light');
             
             const motion = await getFeedValue('motion');
-            document.getElementById('motionVal').innerText = motion == '1' ? '🚨 MOTION!' : 'Clear';
+            document.getElementById('motionVal').innerText = motion == '1' ? '🚨 Motion!' : 'Clear';
         }
 
         async function toggleLight() {
@@ -144,11 +309,11 @@
             });
 
             if (ledState) {
-                btn.innerText = "Turn LED OFF";
-                btn.classList.add('btn-off');
+                btn.innerText = "LED IS ON";
+                btn.classList.add('active');
             } else {
                 btn.innerText = "Turn LED ON";
-                btn.classList.remove('btn-off');
+                btn.classList.remove('active');
             }
         }
     </script>
