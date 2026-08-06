@@ -1,5 +1,7 @@
 ![AI Dashboard Theme Guide]([https://github.com/mymadi/pico-iot-adventure/blob/main/Module-4-The-Website/AI_Dashboard_Theme_Guide (1).png](https://github.com/mymadi/pico-iot-adventure/blob/main/Module-4-The-Website/AI_Dashboard_Theme_Guide%20(1).png)?raw=true)
 
+![AI Dashboard Theme Guide]([[https://github.com/mymadi/pico-iot-adventure/blob/main/Module-4-The-Website/AI_Dashboard_Theme_Guide.png](https://github.com/mymadi/pico-iot-adventure/blob/main/Module-4-The-Website/AI_Dashboard_Theme_Guide%20(1).png)](https://github.com/mymadi/pico-iot-adventure/blob/main/Module-4-The-Website/AI_Dashboard_Theme_Guide%20(1).png)?raw=true)
+
 # 🎨 AI Theme Generator Guide
 
 Welcome to the Hacker Challenge! You don't need to be a CSS expert to make your dashboard look amazing. By using an AI assistant as your coding co-pilot, you can completely change how your dashboard looks. 
