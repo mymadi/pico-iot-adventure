@@ -2,6 +2,8 @@
 
 Welcome to the **Pico IoT Adventure** repository! This hands-on primary school course guides students through building a complete Internet of Things (IoT) system using the **Raspberry Pi Pico W** and **CircuitPython**.
 
+![IoT Hardware to Cloud Journey](./IoT_Hardware_to_Cloud_Journey.png)
+
 Students will learn to bridge physical electronic hardware with modern browser-based web dashboards using **Adafruit IO** and **MQTT**.
 
 ---
