@@ -14,7 +14,7 @@ Students can choose between two fun real-world applications to build throughout 
 
 * 🛏️ **Theme 1: The Smart Bedroom**  
   Build an automated nightlight, smart morning window curtains, and a security monitor.
-* 🌾 **Theme 6: The Mini Smart Farm**  
+* 🌾 **Theme 2: The Mini Smart Farm**  
   Build an automated greenhouse grow light, a smart sunshade deployer, and a crop security system.
 
 ---
