@@ -294,10 +294,19 @@
             const aiText = await getFeedValue('iot-adventure.ai-decision');
             document.getElementById('aiDecisionVal').innerText = `"${aiText}"`;
 
-            document.getElementById('tempVal').innerText = (await getFeedValue('iot-adventure.temperature')) + ' °C';
-            document.getElementById('humVal').innerText = (await getFeedValue('iot-adventure.humidity')) + ' %';
-            document.getElementById('lightVal').innerText = await getFeedValue('iot-adventure.light');
+            // 🌡️ Fetch and format Temperature
+            const temp = await getFeedValue('iot-adventure.temperature');
+            document.getElementById('tempVal').innerText = temp !== '--' ? parseFloat(temp).toFixed(1) + ' °C' : '-- °C';
+
+            // 💧 Fetch and format Humidity
+            const hum = await getFeedValue('iot-adventure.humidity');
+            document.getElementById('humVal').innerText = hum !== '--' ? parseFloat(hum).toFixed(1) + ' %' : '-- %';
+
+            // ☀️ Fetch and format Light Level (with 1 decimal point and % sign!)
+            const light = await getFeedValue('iot-adventure.light');
+            document.getElementById('lightVal').innerText = light !== '--' ? parseFloat(light).toFixed(1) + ' %' : '--';
             
+            // 🏃 Fetch and format Motion
             const motion = await getFeedValue('iot-adventure.motion');
             const motionUI = document.getElementById('motionVal');
             
