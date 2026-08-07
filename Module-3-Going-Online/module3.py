@@ -85,7 +85,7 @@ while True:
                 humidity = None
             
             motion_detected = pir_sensor.value
-            light_level = ldr.value
+            light_level = 65535 - ldr.value
 
             # 🖨️ 2. PRINT TO THE SCREEN 
             print("\n--- 🕵️‍♂️ SECRET AGENT DASHBOARD ---")
