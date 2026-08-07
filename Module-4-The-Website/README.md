@@ -1,5 +1,7 @@
 # Module 4: The Control Center 💻🎛️
 
+<img src="[https://github.com/mymadi/pico-iot-adventure/blob/main/Module-5-The-Smart-AI-Brain/Building_Autonomous_Edge_AI_Systems.png](https://github.com/mymadi/pico-iot-adventure/blob/main/Module-4-The-Website/Smart_Control_Center_Launch_Guide.png)?raw=true" width="800">
+
 This is the final step! We have built our hardware and connected it to the internet. Now, we are going to build a custom website (Dashboard) that you can open on your computer to monitor your Bedroom or Farm from anywhere in the world!
 
 ## 🛠️ What You Need
