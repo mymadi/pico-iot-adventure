@@ -85,7 +85,10 @@ while True:
                 humidity = None
             
             motion_detected = pir_sensor.value
-            light_level = 65535 - ldr.value
+            
+            # 1. Convert raw light value to a percentage (0 - 100%)
+            inverted_value = 65535 - ldr.value
+            light_level = (inverted_value / 65535) * 100
 
             # 🖨️ 2. PRINT TO THE SCREEN 
             print("\n--- 🕵️‍♂️ SECRET AGENT DASHBOARD ---")
@@ -94,7 +97,8 @@ while True:
                 print(f"🌡️ Temperature is: {temperature} C")
                 print(f"💧 Humidity is: {humidity} %")
             
-            print(f"☀️ Light Power: {light_level}")
+            # We use :.1f to round it to 1 decimal place (e.g., 45.2%)
+            print(f"☀️ Light Power: {light_level:.1f}%")
             
             if motion_detected:
                 print("🚨 Motion: INTRUDER DETECTED!!")
