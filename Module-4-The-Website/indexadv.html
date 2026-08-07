@@ -52,6 +52,11 @@
             flex: 1;
         }
 
+        /* Make the number box a little smaller than the password boxes */
+        #refreshRate {
+            max-width: 100px;
+        }
+
         .sensor-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -179,13 +184,14 @@
         @media (max-width: 500px) {
             .sensor-grid { grid-template-columns: 1fr; }
             .config-box { flex-direction: column; }
+            #refreshRate { max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
     <h1>
-        <!-- 🖥️ New Microchip / CPU Icon for IoT Theme -->
+        <!-- 🖥️ Microchip / CPU Icon -->
         <svg class="icon" style="stroke: #2c3e50; width: 36px; height: 36px;" viewBox="0 0 24 24">
             <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
             <rect x="9" y="9" width="6" height="6"></rect>
@@ -206,6 +212,8 @@
         <div class="config-box">
             <input type="text" id="username" placeholder="Adafruit Username">
             <input type="password" id="aioKey" placeholder="Adafruit AIO Key">
+            <!-- ⏱️ NEW: Refresh Rate Input -->
+            <input type="number" id="refreshRate" placeholder="Seconds" value="3" min="3" title="Refresh Rate (Minimum 3s)">
             <button class="btn" id="connectBtn" onclick="toggleConnection()">Connect</button>
         </div>
 
@@ -215,7 +223,6 @@
             <!-- Temperature -->
             <div class="card">
                 <div class="card-header">
-                    <!-- Thermometer Icon -->
                     <svg class="icon" id="tempIcon" viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
                     <h3>Temperature</h3>
                 </div>
@@ -225,7 +232,6 @@
             <!-- Humidity -->
             <div class="card">
                 <div class="card-header">
-                    <!-- Droplet Icon -->
                     <svg class="icon" id="humIcon" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
                     <h3>Humidity</h3>
                 </div>
@@ -238,7 +244,6 @@
             <!-- Light Level -->
             <div class="card">
                 <div class="card-header">
-                    <!-- Sun Icon -->
                     <svg class="icon" id="lightIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
                     <h3>Light Level</h3>
                 </div>
@@ -251,7 +256,6 @@
             <!-- Motion Status -->
             <div class="card">
                 <div class="card-header">
-                    <!-- Radar/Activity Icon -->
                     <svg class="icon" id="motionIcon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                     <h3>Motion Status</h3>
                 </div>
@@ -304,22 +308,36 @@
             const btn = document.getElementById('connectBtn');
             const user = document.getElementById('username').value;
             const key = document.getElementById('aioKey').value;
+            const refreshInput = document.getElementById('refreshRate');
 
             if (!user || !key) { alert("Please enter your Username and Key!"); return; }
 
             if (isConnected === false) {
+                
+                // ⏱️ Check the refresh rate text box!
+                let rateInSeconds = parseInt(refreshInput.value);
+                
+                // If they typed nothing, or a number less than 3, force it to 3!
+                if (isNaN(rateInSeconds) || rateInSeconds < 3) {
+                    rateInSeconds = 3;
+                    refreshInput.value = 3; // Update the box so the student sees it fixed itself
+                }
+
                 isConnected = true;
                 btn.innerText = "Disconnect";
                 btn.classList.add('btn-off'); 
+                refreshInput.disabled = true; // Lock the number box so they can't change it while connected
                 
                 tempChart.data.labels = []; tempChart.data.datasets[0].data = []; tempChart.update();
                 
                 fetchData(); 
-                timerID = setInterval(fetchData, 3000); 
+                // Convert seconds to milliseconds for the timer!
+                timerID = setInterval(fetchData, rateInSeconds * 1000); 
             } else {
                 isConnected = false;
                 btn.innerText = "Connect";
                 btn.classList.remove('btn-off'); 
+                refreshInput.disabled = false; // Unlock the number box
                 clearInterval(timerID); 
 
                 document.getElementById('tempVal').innerText = '-- °C';
@@ -374,7 +392,6 @@
                 tempChart.data.datasets[0].data.push(tempNum);
                 tempChart.data.datasets[0].borderColor = tempColor;
                 
-                // 🚀 INCREASED MAX POINTS: Keeps 40 points on the graph now instead of 10!
                 if (tempChart.data.labels.length > 40) {
                     tempChart.data.labels.shift();
                     tempChart.data.datasets[0].data.shift();
