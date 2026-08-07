@@ -188,11 +188,12 @@
         }
 
         async function fetchData() {
-            document.getElementById('tempVal').innerText = (await getFeedValue('temperature')) + ' °C';
-            document.getElementById('humVal').innerText = (await getFeedValue('humidity')) + ' %';
-            document.getElementById('lightVal').innerText = await getFeedValue('light');
+            // Notice the "iot-adventure." added before the feed names!
+            document.getElementById('tempVal').innerText = (await getFeedValue('iot-adventure.temperature')) + ' °C';
+            document.getElementById('humVal').innerText = (await getFeedValue('iot-adventure.humidity')) + ' %';
+            document.getElementById('lightVal').innerText = await getFeedValue('iot-adventure.light');
             
-            const motion = await getFeedValue('motion');
+            const motion = await getFeedValue('iot-adventure.motion');
             document.getElementById('motionVal').innerText = motion == '1' ? '🚨 MOTION!' : 'Clear';
         }
 
@@ -204,7 +205,8 @@
             ledState = !ledState;
             const payload = { value: ledState ? "1" : "0" };
 
-            await fetch(`https://io.adafruit.com/api/v2/${user}/feeds/led/data`, {
+            // We also updated the LED feed to live inside the iot-adventure group
+            await fetch(`https://io.adafruit.com/api/v2/${user}/feeds/iot-adventure.led/data`, {
                 method: 'POST',
                 headers: {
                     'X-AIO-Key': key,
