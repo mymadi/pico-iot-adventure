@@ -1,5 +1,8 @@
 # Module 3: Going Online 🌍📡
 
+<img src="https://github.com/mymadi/pico-iot-adventure/blob/main/Module-3-Going-Online/IoT_Hardware_to_Cloud_Journey.png?raw=true" width="800">
+
+
 It is time to put the "Internet" into our Internet of Things (IoT) project! We are going to connect our Pico W to the WiFi and teach it how to send sensor data to the cloud using Adafruit IO. We will also add our final sensors!
 
 ---
