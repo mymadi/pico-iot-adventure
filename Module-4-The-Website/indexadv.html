@@ -416,8 +416,11 @@
 
             // ☀️ 3. DYNAMIC LIGHT POWER BAR
             if (light !== '--') {
-                document.getElementById('lightVal').innerText = light;
-                const lightPercent = Math.min((parseFloat(light) / 65535) * 100, 100);
+                // 1. Add the '%' symbol to the text!
+                document.getElementById('lightVal').innerText = light + ' %';
+                
+                // 2. The Pico is already sending a percentage, so just use it directly!
+                const lightPercent = Math.min(parseFloat(light), 100);
                 
                 let lightColor = '#f1c40f'; // Yellow
                 if (lightPercent < 30) lightColor = '#7f8c8d'; // Dark Grey if very low light
