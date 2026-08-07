@@ -26,7 +26,7 @@ print("Module 2 System Ready! Monitoring Light Levels...")
 # --------------------------------------------------
 while True:
     # Read raw light value (range is 0 to 65535)
-    light_level = ldr.value
+    light_level = 65535 - ldr.value
     print("Current Light Level:", light_level)
     
     # --------------------------------------------------
