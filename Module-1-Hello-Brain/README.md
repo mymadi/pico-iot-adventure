@@ -18,7 +18,11 @@ Whether you are building a **Smart Bedroom** (Smart Nightlight) or a **Mini Smar
 ## 💻 Your Mission
 1. Open the `code.py` file in this folder.
 2. Copy the code and paste it into **Thonny**.
-3. Click **Run** and watch your hardware come to life!
+3. Scroll past the **🛑 Engine Room** (no touching the wires in there!) and find the **🎮 Hacker Zone**.
+4. Click **Run** (the green play button) and watch your hardware come to life!
 
 ## 🚀 The Hacker Challenge
-Once your light is blinking, look for the `time.sleep(1)` lines in the code. Change the numbers to decimals (like `0.5` or `0.1`) to create a fast strobe light or a heartbeat effect!
+Right now, your light turns on for 1 second and off for 1 second. Can you change the `TIME_ON` and `TIME_OFF` numbers in the Hacker Zone to make it blink differently?
+
+* **Strobe Light:** Try making both numbers `0.1` to create a super-fast strobe light!
+* **Heartbeat:** Try making `TIME_ON = 3` and `TIME_OFF = 0.2` to make it stay on long, but turn off for just a quick blip!
