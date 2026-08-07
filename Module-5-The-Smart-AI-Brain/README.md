@@ -55,7 +55,7 @@ Your AI is going to need a place to broadcast its thoughts. Let's add a new feed
 
 Now let's visualize the AI's brain on a futuristic web dashboard!
 
-1. Open the `ai_dashboard.html` file in your web browser (Chrome, Edge, or Safari).
+1. Open the `indexAI.html` file in your web browser (Chrome, Edge, or Safari).
 2. Enter your Adafruit IO **Username** and **AIO Key** in the top boxes.
 3. Click **Connect**.
 4. Watch the magic happen! As you cover the light sensor or trigger the motion detector, watch the 🧠 **Latest AI Decision** box update automatically without you clicking anything!
