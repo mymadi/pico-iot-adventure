@@ -62,7 +62,7 @@
 
         .config-box input:focus { border-color: #3498db; }
 
-        /* ✨ NEW: AI Decision Box ✨ */
+        /* ✨ AI Decision Box ✨ */
         .ai-box {
             background: #ffffff;
             padding: 25px;
@@ -71,7 +71,7 @@
             border: 3px solid transparent;
             background-clip: padding-box;
             position: relative;
-            box-shadow: 0 10px 25px rgba(155, 89, 182, 0.2); /* Soft purple AI glow */
+            box-shadow: 0 10px 25px rgba(155, 89, 182, 0.2); 
         }
         
         /* Gradient border for AI */
@@ -197,7 +197,7 @@
             <button class="btn" id="connectBtn" onclick="toggleConnection()">Connect</button>
         </div>
 
-        <!-- ✨ NEW: AI Decision Engine Output ✨ -->
+        <!-- ✨ AI Decision Engine Output ✨ -->
         <div class="ai-box">
             <h3>🧠 Latest AI Decision</h3>
             <div class="ai-value" id="aiDecisionVal">"Waiting for system connection..."</div>
@@ -223,9 +223,9 @@
             </div>
         </div>
 
-        <!-- Remote Control Section (Optional Override) -->
+        <!-- Remote Control Section -->
         <div class="control-card">
-            <h3>⚙️ Manual Override</h3>
+            <h3>⚙️ AI / Manual Override</h3>
             <button class="btn" id="lightBtn" onclick="toggleLight()">Turn LED ON</button>
         </div>
     </div>
@@ -302,7 +302,7 @@
             const hum = await getFeedValue('iot-adventure.humidity');
             document.getElementById('humVal').innerText = hum !== '--' ? parseFloat(hum).toFixed(1) + ' %' : '-- %';
 
-            // ☀️ Fetch and format Light Level (with 1 decimal point and % sign!)
+            // ☀️ Fetch and format Light Level (1 decimal point & % sign)
             const light = await getFeedValue('iot-adventure.light');
             document.getElementById('lightVal').innerText = light !== '--' ? parseFloat(light).toFixed(1) + ' %' : '--';
             
@@ -316,6 +316,20 @@
             } else {
                 motionUI.innerText = '✅ Clear';
                 motionUI.classList.remove('alert-active');
+            }
+
+            // ✨ NEW: Fetch the LED status so the button matches the AI! ✨
+            const ledStatus = await getFeedValue('iot-adventure.led');
+            const ledBtn = document.getElementById('lightBtn');
+            
+            if (ledStatus === '1') {
+                ledState = true; 
+                ledBtn.innerText = "LED is ON (AI Managed)";
+                ledBtn.classList.add('btn-off'); 
+            } else if (ledStatus === '0') {
+                ledState = false; 
+                ledBtn.innerText = "LED is OFF (AI Managed)";
+                ledBtn.classList.remove('btn-off'); 
             }
         }
 
@@ -342,11 +356,12 @@
                     body: JSON.stringify(payload)
                 });
 
+                // Update the button temporarily (the AI might change it back!)
                 if (ledState) {
-                    btn.innerText = "Turn LED OFF";
+                    btn.innerText = "LED is ON (AI Managed)";
                     btn.classList.add('btn-off');
                 } else {
-                    btn.innerText = "Turn LED ON";
+                    btn.innerText = "LED is OFF (AI Managed)";
                     btn.classList.remove('btn-off');
                 }
             } catch (error) {
