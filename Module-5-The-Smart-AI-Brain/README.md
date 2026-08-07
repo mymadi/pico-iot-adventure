@@ -1,6 +1,6 @@
 # 🧠 Module 5: The Smart AI Brain (Autonomous Mode)
 
-![Building Autonomous Edge AI Systems](https://github.com/mymadi/pico-iot-adventure/blob/main/Module-5-The-Smart-AI-Brain/Building_Autonomous_Edge_AI_Systems.png?raw=true)
+<img src="https://github.com/mymadi/pico-iot-adventure/blob/main/Module-5-The-Smart-AI-Brain/Building_Autonomous_Edge_AI_Systems.png?raw=true" width="600">
 
 Welcome to your final mission! Until now, your Raspberry Pi Pico W has been a "puppet"—it just sends data to the cloud and waits for a human to click a button to move a motor or turn on a light. 
 
