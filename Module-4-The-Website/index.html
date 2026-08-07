@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IoT Control Center</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7f6;
@@ -18,12 +16,8 @@
             align-items: center;
         }
 
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
+        h1 { color: #2c3e50; margin-bottom: 20px; }
 
-        /* Container to keep everything aligned */
         .dashboard-container {
             width: 100%;
             max-width: 650px;
@@ -32,7 +26,6 @@
             gap: 20px;
         }
 
-        /* Top Config Box */
         .config-box {
             background: #ffffff;
             padding: 18px 24px;
@@ -51,7 +44,6 @@
             flex: 1;
         }
 
-        /* Balanced 2x2 Sensor Grid */
         .sensor-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -78,7 +70,6 @@
             color: #2c3e50;
         }
 
-        /* Remote Control Card */
         .control-card {
             background: #ffffff;
             padding: 24px;
@@ -104,25 +95,14 @@
             transition: background 0.2s, transform 0.1s;
         }
 
-        .btn:hover {
-            background-color: #2980b9;
-        }
+        .btn:hover { background-color: #2980b9; }
 
-        .btn-off {
-            background-color: #e74c3c;
-        }
-
-        .btn-off:hover {
-            background-color: #c0392b;
-        }
+        .btn-off { background-color: #e74c3c; }
+        .btn-off:hover { background-color: #c0392b; }
 
         @media (max-width: 500px) {
-            .sensor-grid {
-                grid-template-columns: 1fr;
-            }
-            .config-box {
-                flex-direction: column;
-            }
+            .sensor-grid { grid-template-columns: 1fr; }
+            .config-box { flex-direction: column; }
         }
     </style>
 </head>
@@ -135,7 +115,8 @@
         <div class="config-box">
             <input type="text" id="username" placeholder="Adafruit Username">
             <input type="password" id="aioKey" placeholder="Adafruit AIO Key">
-            <button class="btn" onclick="saveCredentials()">Connect</button>
+            <!-- We gave this button an ID so we can change it to "Disconnect" -->
+            <button class="btn" id="connectBtn" onclick="toggleConnection()">Connect</button>
         </div>
 
         <!-- 2x2 Sensor Grid -->
@@ -167,10 +148,44 @@
 
     <script>
         let ledState = false;
+        
+        // We added these to keep track of our connection!
+        let isConnected = false;
+        let timerID = null;
 
-        function saveCredentials() {
-            fetchData();
-            setInterval(fetchData, 3000);
+        function toggleConnection() {
+            const btn = document.getElementById('connectBtn');
+            const user = document.getElementById('username').value;
+            const key = document.getElementById('aioKey').value;
+
+            // Make sure the student actually typed their passwords!
+            if (!user || !key) {
+                alert("Hold on Hacker! Please enter your Username and Key first!");
+                return;
+            }
+
+            if (isConnected === false) {
+                // 🟢 CONNECTING 🟢
+                isConnected = true;
+                btn.innerText = "Disconnect";
+                btn.classList.add('btn-off'); // Turns the button red
+                
+                fetchData(); // Fetch once immediately
+                timerID = setInterval(fetchData, 3000); // Start the 3-second timer
+            } else {
+                // 🔴 DISCONNECTING 🔴
+                isConnected = false;
+                btn.innerText = "Connect";
+                btn.classList.remove('btn-off'); // Turns the button blue again
+                
+                clearInterval(timerID); // Stop the timer!
+
+                // Erase the screen data
+                document.getElementById('tempVal').innerText = '-- °C';
+                document.getElementById('humVal').innerText = '-- %';
+                document.getElementById('lightVal').innerText = '--';
+                document.getElementById('motionVal').innerText = '--';
+            }
         }
 
         async function getFeedValue(feedKey) {
@@ -188,7 +203,6 @@
         }
 
         async function fetchData() {
-            // Notice the "iot-adventure." added before the feed names!
             document.getElementById('tempVal').innerText = (await getFeedValue('iot-adventure.temperature')) + ' °C';
             document.getElementById('humVal').innerText = (await getFeedValue('iot-adventure.humidity')) + ' %';
             document.getElementById('lightVal').innerText = await getFeedValue('iot-adventure.light');
@@ -205,7 +219,6 @@
             ledState = !ledState;
             const payload = { value: ledState ? "1" : "0" };
 
-            // We also updated the LED feed to live inside the iot-adventure group
             await fetch(`https://io.adafruit.com/api/v2/${user}/feeds/iot-adventure.led/data`, {
                 method: 'POST',
                 headers: {
