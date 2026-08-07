@@ -1,5 +1,6 @@
 # Module 2: Sensing the World ☀️🤖
 
+<img src="https://github.com/mymadi/pico-iot-adventure/blob/main/Module-2-Sensing-The-World/Light-Triggered_Motion_Electronics_Project.png?raw=true" width="800">
 Now that our brain is awake, we need to give it "eyes" and "muscles"! In this module, we will use a light sensor (LDR) to detect the sun, and a Servo motor to create physical movement.
 
 * **Smart Bedroom:** You will build Automated Curtains that open when the sun comes up!
