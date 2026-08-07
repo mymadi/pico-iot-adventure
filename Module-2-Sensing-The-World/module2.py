@@ -1,53 +1,51 @@
-import board
-import digitalio
-import analogio
-import pwmio
+import board, analogio, pwmio, time
 from adafruit_motor import servo
-import time
 
-# --------------------------------------------------
-# STEP 1: SET UP THE HARDWARE
-# --------------------------------------------------
+# 🛑 ======================================================== 🛑
+# 🛑        ENGINE ROOM: DO NOT TOUCH THE WIRES BELOW!        🛑
+# 🛑 ======================================================== 🛑
 
-# 1. Set up the LDR Light Sensor on Analog Pin GP26
+# 1. Plugging in the robot's eye (Light Sensor)
 ldr = analogio.AnalogIn(board.GP26)
 
-# 2. Set up the SG90 Servo Motor on PWM Pin GP16
+# 2. Plugging in the robot's arm (Servo Motor)
 pwm = pwmio.PWMOut(board.GP16, duty_cycle=0, frequency=50)
 my_servo = servo.Servo(pwm)
 
-# Create a variable to keep track of curtain/shade state
+# Robot memory: Is the curtain open or closed right now?
 is_open = False
 
-print("Module 2 System Ready! Monitoring Light Levels...")
+print("🤖 Robot Awake! Waiting for light...")
 
-# --------------------------------------------------
-# STEP 2: THE MAIN LOOP
-# --------------------------------------------------
+
+# 🎮 ======================================================== 🎮
+# 🎮               HACKER ZONE: SAFE TO EDIT!                 🎮
+# 🎮 ======================================================== 🎮
+
+# 🕵️‍♂️ HACKER MISSION: Find your perfect "Magic Number"!
+# Use your flashlight and your hand to test the light sensor. 
+# Change 30000 to the best number for your room.
+MAGIC_NUMBER = 30000
+
 while True:
-    # Read raw light value (range is 0 to 65535)
+    
+    # 1. Read the light sensor (Flipping the numbers so more light = bigger number)
     light_level = 65535 - ldr.value
-    print("Current Light Level:", light_level)
     
-    # --------------------------------------------------
-    # STEP 3: IF / ELSE DECISION MAKING
-    # --------------------------------------------------
-    # HACKER CHALLENGE: Adjust this threshold number (30000)
-    # based on how bright your room is!
+    print(f"☀️ Current Light Level is: {light_level}")
     
-    if light_level > 30000 and not is_open:
+    # 2. The Robot's Brain (If / Else Decision)
+    if light_level > MAGIC_NUMBER and is_open == False:
         # BRIGHT LIGHT DETECTED!
-        # Bedroom: Open curtains / Farm: Deploy sunshade
-        print("--> Bright light detected! Moving Servo to OPEN position (90°)...")
-        my_servo.angle = 90
-        is_open = True
+        print("😎 It is bright! Opening the curtains...")
+        my_servo.angle = 90  # 90 degrees is OPEN
+        is_open = True       # The robot remembers it opened the curtain
         
-    elif light_level <= 30000 and is_open:
+    elif light_level <= MAGIC_NUMBER and is_open == True:
         # DARKNESS DETECTED!
-        # Bedroom: Close curtains / Farm: Retract sunshade
-        print("--> It's dark! Moving Servo to CLOSED position (0°)...")
-        my_servo.angle = 0
-        is_open = False
+        print("😴 It is dark! Closing the curtains...")
+        my_servo.angle = 0   # 0 degrees is CLOSED
+        is_open = False      # The robot remembers it closed the curtain
 
-    # Pause briefly before reading the light sensor again
+    # Wait 1 second before checking again so the robot doesn't get dizzy
     time.sleep(1)
