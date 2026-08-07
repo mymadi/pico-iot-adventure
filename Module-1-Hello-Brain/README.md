@@ -1,5 +1,6 @@
 # Module 1: Hello Brain! 🧠💡
 
+<img src="https://github.com/mymadi/pico-iot-adventure/blob/main/Module-1-Hello-Brain/Microcontroller_and_Code_Deployment_Guide.png?raw=true" width="800">
 Welcome to your first IoT mission! Today, we are going to wake up the "brain" of our project—the Raspberry Pi Pico W—and teach it how to control the physical world. 
 
 Whether you are building a **Smart Bedroom** (Smart Nightlight) or a **Mini Smart Farm** (Grow Light), everything starts with turning on a single light.
