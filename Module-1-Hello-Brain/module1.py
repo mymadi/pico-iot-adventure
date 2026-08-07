@@ -2,32 +2,38 @@ import board
 import digitalio
 import time
 
-# --------------------------------------------------
-# STEP 1: SET UP THE HARDWARE
-# --------------------------------------------------
-# We are telling the Brain that an LED is plugged into Pin GP15
+# 🛑 ======================================================== 🛑
+# 🛑        ENGINE ROOM: DO NOT TOUCH THE WIRES BELOW!        🛑
+# 🛑 ======================================================== 🛑
+
+# 1. Plugging the smart light into the robot's brain
 smart_light = digitalio.DigitalInOut(board.GP15)
 smart_light.direction = digitalio.Direction.OUTPUT
 
-print("Brain is awake! Starting the Smart Light...")
+print("🤖 Brain is awake! Starting the Smart Light...")
 
-# --------------------------------------------------
-# STEP 2: THE MAIN LOOP (The Brain keeps doing this forever)
-# --------------------------------------------------
+
+# 🎮 ======================================================== 🎮
+# 🎮               HACKER ZONE: SAFE TO EDIT!                 🎮
+# 🎮 ======================================================== 🎮
+
+# ⏱️ HACKER MISSION: Change how fast the light blinks!
+# Try changing these numbers to 0.5 (super fast!), 0.1 (strobe light!), or 3 (slow).
+TIME_ON = 1
+TIME_OFF = 1
+
 while True:
     
-    # Turn the light ON
+    # 1. Turn the light ON
     smart_light.value = True
-    print("Light is ON!")
+    print("💡 Light is ON!")
     
-    # Wait for a few seconds 
-    # HACKER CHALLENGE: Change the number 1 to 0.5 or 3!
-    time.sleep(1) 
+    # Wait while the light is on
+    time.sleep(TIME_ON) 
     
-    # Turn the light OFF
+    # 2. Turn the light OFF
     smart_light.value = False
-    print("Light is OFF!")
+    print("🌑 Light is OFF!")
     
-    # Wait again before repeating
-    # HACKER CHALLENGE: Change this number too!
-    time.sleep(1)
+    # Wait while the light is off
+    time.sleep(TIME_OFF)
