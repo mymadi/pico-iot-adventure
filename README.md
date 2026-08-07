@@ -51,7 +51,7 @@ Students can choose between two fun real-world applications to build throughout 
 
 ## 📂 Course Modules
 
-This course is structured into 4 sequential modules. Click any module link below to access its step-by-step guide and starter code:
+This course is structured into **5 sequential modules**. Click any module link below to access its step-by-step guide and starter code:
 
 | Module | Title | Hardware Covered | Key Concept |
 | :--- | :--- | :--- | :--- |
@@ -59,6 +59,7 @@ This course is structured into 4 sequential modules. Click any module link below
 | ☀️ **[Module 2](./Module-2-Sensing-The-World)** | **Sensing the World** | LDR, Servo Motor | Analog Inputs & Threshold Logic |
 | 🛰️ **[Module 3](./Module-3-Going-Online)** | **Going Online** | DHT22, PIR Sensor, Wi-Fi | MQTT Publishing & Adafruit IO Cloud |
 | 💻 **[Module 4](./Module-4-The-Website)** | **The Control Center** | HTML, Web Browser | Data Visualization & Web Remote Control |
+| 🤖 **[Module 5](./Module-5-The-Smart-AI-Brain)**| **The Smart AI Brain** | All Hardware combined | Rule-Based Edge AI & Autonomous Logic |
 
 ---
 
