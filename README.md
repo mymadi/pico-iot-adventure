@@ -4,6 +4,7 @@
 [![Platform](https://img.shields.io/badge/Board-Raspberry%20Pi%20Pico%20W-red.svg)](https://www.raspberrypi.com/products/raspberry-pi-pico/)
 [![Language](https://img.shields.io/badge/Language-CircuitPython-blue.svg)](https://circuitpython.org/)
 [![Broker](https://img.shields.io/badge/MQTT-Adafruit%20IO-black.svg)](https://io.adafruit.com/)
+[![Edge AI](https://img.shields.io/badge/AI-Edge%20AI-purple.svg)](#)
 
 Welcome to the **Pico IoT Adventure** repository! Designed for both **primary and secondary school students**, this hands-on course guides learners through building a complete Internet of Things (IoT) system using the **Raspberry Pi Pico W**, **CircuitPython**, and the **Adafruit IO Cloud Service**.
 
