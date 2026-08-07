@@ -23,6 +23,7 @@ pir_sensor.direction = digitalio.Direction.INPUT
 dht_sensor = adafruit_dht.DHT22(board.GP14)
 
 def get_light_level():
+    # Convert raw data into a 0-100% reading
     inverted_value = 65535 - light_sensor.value
     return (inverted_value / 65535) * 100
 
@@ -95,7 +96,7 @@ while True:
             if led.value == False and motor.angle == 0:
                  ai_thought = "Environment is stable and safe."
 
-            # Step 3: Broadcast the AI's thoughts to the Web Dashboard!
+            # Step 3: Broadcast the AI's thoughts & actions to the Web Dashboard!
             print(f"📡 Sending to Dashboard: {ai_thought}")
             
             if temperature is not None:
@@ -104,9 +105,10 @@ while True:
                 
             io.publish(f"{GROUP_NAME}.light", light_level)
             io.publish(f"{GROUP_NAME}.motion", 1 if motion_detected else 0)
-            
-            # ✨ Sending the special AI Decision text to the dashboard! ✨
             io.publish(f"{GROUP_NAME}.ai-decision", ai_thought)
+            
+            # ✨ Synchronize the real-world LED status with the website! ✨
+            io.publish(f"{GROUP_NAME}.led", "1" if led.value else "0")
             
             last_send_time = time.monotonic()
             
