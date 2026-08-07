@@ -10,7 +10,7 @@ This is the final step! We have built our hardware and connected it to the inter
 ## 💻 Your Mission
 1. In this folder, you will find **TWO** website files. Choose your level:
    * 🟢 **`index.html` (Simple):** A clean, classic dashboard. Great for starting out!
-   * 🔴 **`advanced.html` (Advanced):** A high-tech dashboard with live graphs, gauges, and color-changing icons!
+   * 🔴 **`indexadv.html` (Advanced):** A high-tech dashboard with live graphs, gauges, and color-changing icons!
 2. Double-click the file you chose to open it in your web browser.
 3. Type in your **Adafruit Username** AND your **Adafruit AIO Key** into the boxes at the top, then click **Connect**.
 4. Test the connection: Click the "Turn LED ON" button on the website and watch the physical LED on your desk light up!
