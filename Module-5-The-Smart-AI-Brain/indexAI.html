@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Control Center</title>
+    <style>
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #2c3e50;
+        }
+
+        h1 { 
+            font-size: 2.5rem;
+            margin-bottom: 30px; 
+            color: #1a252f;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-container {
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Config Box */
+        .config-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .config-box input {
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            outline: none;
+            flex: 1 1 200px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .config-box input:focus { border-color: #3498db; }
+
+        /* ✨ NEW: AI Decision Box ✨ */
+        .ai-box {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(155, 89, 182, 0.2); /* Soft purple AI glow */
+        }
+        
+        /* Gradient border for AI */
+        .ai-box::before {
+            content: '';
+            position: absolute;
+            top: -3px; bottom: -3px; left: -3px; right: -3px;
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            z-index: -1;
+            border-radius: 18px;
+        }
+
+        .ai-box h3 {
+            color: #8e44ad;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .ai-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            font-style: italic;
+        }
+
+        /* Sensor Grid */
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 5px solid #3498db;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        .card:nth-child(2) { border-top-color: #2ecc71; } /* Humidity */
+        .card:nth-child(3) { border-top-color: #f1c40f; } /* Light */
+        .card:nth-child(4) { border-top-color: #e74c3c; } /* Motion */
+
+        .card h3 {
+            margin-bottom: 12px;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .alert-active {
+            color: #e74c3c !important;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 1; text-shadow: 0 0 10px rgba(231, 76, 60, 0.2); }
+            to { opacity: 0.6; text-shadow: 0 0 20px rgba(231, 76, 60, 0.6); }
+        }
+
+        /* Remote Control Card */
+        .control-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 5px solid #34495e; 
+        }
+
+        .control-card h3 { margin-bottom: 20px; color: #7f8c8d; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Beautiful Buttons */
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover { background-color: #2980b9; transform: scale(1.02); }
+        .btn-off { background-color: #e74c3c; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3); }
+        .btn-off:hover { background-color: #c0392b; }
+
+        @media (max-width: 600px) {
+            .config-box { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🤖 AI Smart Dashboard</h1>
+
+    <div class="dashboard-container">
+        <!-- Configuration Card -->
+        <div class="config-box">
+            <input type="text" id="username" placeholder="Adafruit Username">
+            <input type="password" id="aioKey" placeholder="Adafruit AIO Key">
+            <button class="btn" id="connectBtn" onclick="toggleConnection()">Connect</button>
+        </div>
+
+        <!-- ✨ NEW: AI Decision Engine Output ✨ -->
+        <div class="ai-box">
+            <h3>🧠 Latest AI Decision</h3>
+            <div class="ai-value" id="aiDecisionVal">"Waiting for system connection..."</div>
+        </div>
+
+        <!-- 2x2 Sensor Grid -->
+        <div class="sensor-grid">
+            <div class="card">
+                <h3>🌡️ Temperature</h3>
+                <div class="value" id="tempVal">-- °C</div>
+            </div>
+            <div class="card">
+                <h3>💧 Humidity</h3>
+                <div class="value" id="humVal">-- %</div>
+            </div>
+            <div class="card">
+                <h3>☀️ Light Level</h3>
+                <div class="value" id="lightVal">--</div>
+            </div>
+            <div class="card">
+                <h3>🏃 Motion Status</h3>
+                <div class="value" id="motionVal">--</div>
+            </div>
+        </div>
+
+        <!-- Remote Control Section (Optional Override) -->
+        <div class="control-card">
+            <h3>⚙️ Manual Override</h3>
+            <button class="btn" id="lightBtn" onclick="toggleLight()">Turn LED ON</button>
+        </div>
+    </div>
+
+    <script>
+        let ledState = false;
+        let isConnected = false;
+        let timerID = null;
+
+        function toggleConnection() {
+            const btn = document.getElementById('connectBtn');
+            const user = document.getElementById('username').value.trim();
+            const key = document.getElementById('aioKey').value.trim();
+
+            if (!user || !key) {
+                alert("Hold on Hacker! Please enter your Username and Key first!");
+                return;
+            }
+
+            if (isConnected === false) {
+                // 🟢 CONNECTING 🟢
+                isConnected = true;
+                btn.innerText = "Disconnect";
+                btn.classList.add('btn-off'); 
+                
+                fetchData(); // Fetch once immediately
+                timerID = setInterval(fetchData, 3000); 
+            } else {
+                // 🔴 DISCONNECTING 🔴
+                isConnected = false;
+                btn.innerText = "Connect";
+                btn.classList.remove('btn-off'); 
+                
+                clearInterval(timerID); 
+
+                // Reset UI
+                document.getElementById('aiDecisionVal').innerText = '"System Offline"';
+                document.getElementById('tempVal').innerText = '-- °C';
+                document.getElementById('humVal').innerText = '-- %';
+                document.getElementById('lightVal').innerText = '--';
+                
+                const motionUI = document.getElementById('motionVal');
+                motionUI.innerText = '--';
+                motionUI.classList.remove('alert-active');
+            }
+        }
+
+        async function getFeedValue(feedKey) {
+            const user = document.getElementById('username').value.trim();
+            const key = document.getElementById('aioKey').value.trim();
+            const url = `https://io.adafruit.com/api/v2/${user}/feeds/${feedKey}/data/last`;
+            
+            try {
+                const response = await fetch(url, { headers: { 'X-AIO-Key': key } });
+                const data = await response.json();
+                return data.value;
+            } catch (err) {
+                return '--';
+            }
+        }
+
+        async function fetchData() {
+            if(!isConnected) return;
+
+            // ✨ Fetching the AI Decision Text ✨
+            const aiText = await getFeedValue('iot-adventure.ai-decision');
+            document.getElementById('aiDecisionVal').innerText = `"${aiText}"`;
+
+            document.getElementById('tempVal').innerText = (await getFeedValue('iot-adventure.temperature')) + ' °C';
+            document.getElementById('humVal').innerText = (await getFeedValue('iot-adventure.humidity')) + ' %';
+            document.getElementById('lightVal').innerText = await getFeedValue('iot-adventure.light');
+            
+            const motion = await getFeedValue('iot-adventure.motion');
+            const motionUI = document.getElementById('motionVal');
+            
+            if (motion == '1') {
+                motionUI.innerText = '🚨 MOTION!';
+                motionUI.classList.add('alert-active');
+            } else {
+                motionUI.innerText = '✅ Clear';
+                motionUI.classList.remove('alert-active');
+            }
+        }
+
+        async function toggleLight() {
+            const user = document.getElementById('username').value.trim();
+            const key = document.getElementById('aioKey').value.trim();
+            const btn = document.getElementById('lightBtn');
+            
+            if (!user || !key) {
+                alert("Please connect to the dashboard first!");
+                return;
+            }
+
+            ledState = !ledState;
+            const payload = { value: ledState ? "1" : "0" };
+
+            try {
+                await fetch(`https://io.adafruit.com/api/v2/${user}/feeds/iot-adventure.led/data`, {
+                    method: 'POST',
+                    headers: {
+                        'X-AIO-Key': key,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (ledState) {
+                    btn.innerText = "Turn LED OFF";
+                    btn.classList.add('btn-off');
+                } else {
+                    btn.innerText = "Turn LED ON";
+                    btn.classList.remove('btn-off');
+                }
+            } catch (error) {
+                alert("Failed to send command to Adafruit IO!");
+                ledState = !ledState; // Revert state if failed
+            }
+        }
+    </script>
+</body>
+</html>
