@@ -9,6 +9,7 @@ It is time to put the "Internet" into our Internet of Things (IoT) project! We a
 * **1x Raspberry Pi Pico W**
 * **1x DHT22 Sensor** (Temperature & Humidity)
 * **1x PIR Sensor** (Motion Detector for security/pest control!)
+* *(Don't forget to keep your LED and Light Sensor plugged in from Modules 1 & 2!)*
 
 ---
 
@@ -28,11 +29,12 @@ Before we send data, we need to set up a folder (called a **Group**) in Adafruit
 3. Click the **+ New Group** button.
 4. Name your group exactly: **`iot-adventure`** and click Create.
 5. Click on your newly created group.
-6. Inside the group, click **+ New Feed** to create your individual sensor feeds. You will need to make four feeds:
+6. Inside the group, click **+ New Feed** to create your individual sensor feeds. You will need to make **FIVE** feeds:
    * `temperature`
    * `humidity`
    * `light`
    * `motion`
+   * `led` *(We need this one so our remote control dashboard works!)*
 
 ---
 
