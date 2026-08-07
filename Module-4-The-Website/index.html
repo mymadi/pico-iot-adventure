@@ -203,11 +203,26 @@
         }
 
         async function fetchData() {
-            document.getElementById('tempVal').innerText = (await getFeedValue('iot-adventure.temperature')) + ' °C';
-            document.getElementById('humVal').innerText = (await getFeedValue('iot-adventure.humidity')) + ' %';
-            document.getElementById('lightVal').innerText = (await getFeedValue('iot-adventure.light')) + ' %';
-            
+            // 1. Fetch all the data from Adafruit IO first
+            const temp = await getFeedValue('iot-adventure.temperature');
+            const hum = await getFeedValue('iot-adventure.humidity');
+            const light = await getFeedValue('iot-adventure.light');
             const motion = await getFeedValue('iot-adventure.motion');
+
+            // 2. Round the numbers to 1 decimal place (if the data is not '--')
+            if (temp !== '--') {
+                document.getElementById('tempVal').innerText = parseFloat(temp).toFixed(1) + ' °C';
+            }
+            
+            if (hum !== '--') {
+                document.getElementById('humVal').innerText = parseFloat(hum).toFixed(1) + ' %';
+            }
+            
+            if (light !== '--') {
+                document.getElementById('lightVal').innerText = parseFloat(light).toFixed(1) + ' %';
+            }
+            
+            // 3. Update the motion status
             document.getElementById('motionVal').innerText = motion == '1' ? '🚨 MOTION!' : 'Clear';
         }
 
