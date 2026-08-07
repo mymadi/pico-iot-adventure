@@ -185,7 +185,19 @@
 <body>
 
     <h1>
-        <svg class="icon" style="stroke: #2c3e50; width: 32px; height: 32px;" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <!-- 🖥️ New Microchip / CPU Icon for IoT Theme -->
+        <svg class="icon" style="stroke: #2c3e50; width: 36px; height: 36px;" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+            <rect x="9" y="9" width="6" height="6"></rect>
+            <line x1="9" y1="1" x2="9" y2="4"></line>
+            <line x1="15" y1="1" x2="15" y2="4"></line>
+            <line x1="9" y1="20" x2="9" y2="23"></line>
+            <line x1="15" y1="20" x2="15" y2="23"></line>
+            <line x1="20" y1="9" x2="23" y2="9"></line>
+            <line x1="20" y1="14" x2="23" y2="14"></line>
+            <line x1="1" y1="9" x2="4" y2="9"></line>
+            <line x1="1" y1="14" x2="4" y2="14"></line>
+        </svg>
         IoT Dashboard
     </h1>
 
@@ -362,8 +374,8 @@
                 tempChart.data.datasets[0].data.push(tempNum);
                 tempChart.data.datasets[0].borderColor = tempColor;
                 
-                // Keep max 10 points on graph
-                if (tempChart.data.labels.length > 10) {
+                // 🚀 INCREASED MAX POINTS: Keeps 40 points on the graph now instead of 10!
+                if (tempChart.data.labels.length > 40) {
                     tempChart.data.labels.shift();
                     tempChart.data.datasets[0].data.shift();
                 }
