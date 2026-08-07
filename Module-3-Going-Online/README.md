@@ -19,35 +19,50 @@ It is time to put the "Internet" into our Internet of Things (IoT) project! We a
 
 ---
 
-## 💻 Your Mission
+## ☁️ Step 1: Create a Cloud Folder (Group)
+
+Before we send data, we need to set up a folder (called a **Group**) in Adafruit IO to keep all our project data organized!
+
+1. Open your web browser and log into [io.adafruit.com](https://io.adafruit.com).
+2. On the top menu, click **Feeds**, then select **View Groups** from the drop-down.
+3. Click the **+ New Group** button.
+4. Name your group exactly: **`iot-adventure`** and click Create.
+5. Click on your newly created group.
+6. Inside the group, click **+ New Feed** to create your individual sensor feeds. You will need to make four feeds:
+   * `temperature`
+   * `humidity`
+   * `light`
+   * `motion`
+
+---
+
+## 💻 Step 2: Connect the Engine
 
 1. Open the `settings.toml` file and enter your WiFi password and Adafruit IO keys. Save it to your Pico.
 2. Ensure you have the following libraries inside your Pico's `lib` folder:
    * `adafruit_minimqtt`
    * `adafruit_io`
    * `adafruit_dht`
-3. Run `code.py` and watch the bottom of Thonny. It will tell you when it successfully connects to the cloud!
+3. Open `code.py` in Thonny. 
+4. **Notice the red Stop Signs 🛑!** Do not touch the code at the top. That is the engine room that connects us to the WiFi. 
+5. Click **Run** and watch the bottom of Thonny. It will tell you when it successfully connects to the cloud!
 
 ---
 
-## 🪄 The Magic of Adafruit IO (Auto-Creation)
+## 🎮 Step 3: The Hacker Zone (Code Modding!)
 
-You might be wondering: *"Do I need to create my data feeds on Adafruit IO first?"*
+Now that your Pico is online, let's have some fun! Scroll down in your `code.py` file until you see the game controllers `🎮 HACKER ZONE`. 
 
-**The answer is NO!** 
-
-Adafruit IO is very smart. When your Pico runs its code and shouts, *"Here is the temperature!"*, Adafruit IO automatically creates a new feed called `temperature` to catch it. It will do this for your humidity, light, and motion sensors automatically!
+Try these two Hacker Missions:
+1. **Speed it up!** Find `SEND_INTERVAL = 5`. This is a stopwatch that waits 5 seconds. Change it to `2` and run the code again. Watch how much faster the data flies!
+2. **Change the text!** Find the print messages like `"🚨 Motion: INTRUDER DETECTED!!"`. Can you change it to say `"🚨 A MONSTER IS HERE!!"` or something silly?
 
 ---
 
-## 🚀 The Hacker Challenge: Check Your Live Data!
+## 🚀 Step 4: Check Your Live Data!
 
-Even though the feeds are created automatically, a good engineer always verifies their data. Can you see your temperature and light data updating in real-time? 
+A good engineer always verifies that their data made it to space (the cloud). Let's check!
 
-Here is how to check:
-
-1. Open your web browser and log into [io.adafruit.com](https://io.adafruit.com).
-2. Click on **Feeds** in the top menu bar.
-3. **Behold!** You should see your new feeds listed there (like `temperature`, `humidity`, and `light`).
-4. Click on the **temperature** feed. You will see a line graph! 
-5. **Test it out:** Try breathing warm air on the DHT22 sensor or covering your light sensor. Watch the graph on your computer screen jump in real-time!
+1. Go back to your **`iot-adventure`** Group on the Adafruit IO website.
+2. Click on the **temperature** feed. You will see a line graph! 
+3. **Test it out:** Try breathing warm air on the DHT22 sensor or covering your light sensor. Watch the graph on your computer screen jump in real-time as your Pico sends the data!
