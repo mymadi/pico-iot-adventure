@@ -1,17 +1,26 @@
-# 🚀 MISSION 3: SENDING DATA TO SPACE (THE CLOUD!) 🚀
+# 🚀 MISSION 3: SENDING & RECEIVING FROM SPACE (THE CLOUD!) 🚀
 import time, board, digitalio, analogio, os, wifi, socketpool, adafruit_dht
 import adafruit_minimqtt.adafruit_minimqtt as MQTT
 from adafruit_io.adafruit_io import IO_MQTT
+
+# 📁 The name of your folder on Adafruit IO (Group Name)
+GROUP_NAME = "iot-adventure"
 
 # 🛑 ======================================================== 🛑
 # 🛑        ENGINE ROOM: DO NOT TOUCH THE WIRES BELOW!        🛑
 # 🛑 ======================================================== 🛑
 
-# 1. Plugging in the robot's eyes and skin...
+# 1. Plugging in the robot's eyes, skin, and NEW LED!
 dht_device = adafruit_dht.DHT22(board.GP14)
+
 pir_sensor = digitalio.DigitalInOut(board.GP13)
 pir_sensor.direction = digitalio.Direction.INPUT
+
 ldr = analogio.AnalogIn(board.GP26)
+
+# ---> THIS IS OUR NEW LED <---
+led = digitalio.DigitalInOut(board.GP15)
+led.direction = digitalio.Direction.OUTPUT
 
 # 2. Connecting to the WiFi Network...
 print("📡 Connecting to WiFi:", os.getenv("CIRCUITPY_WIFI_SSID"))
@@ -28,9 +37,27 @@ mqtt_client = MQTT.MQTT(
     password=os.getenv("ADAFRUIT_AIO_KEY"), socket_pool=pool,
 )
 io = IO_MQTT(mqtt_client)
+
 io.on_connect = lambda c: print("✅ Cloud Connected!")
 io.on_disconnect = lambda c: print("❌ Cloud Disconnected!")
+
+# ---> THIS FUNCTION LISTENS FOR THE WEBSITE BUTTON <---
+def message_received(client, feed_id, payload):
+    print(f"\n📩 MESSAGE FROM CLOUD: {payload}")
+    if payload == "1":
+        led.value = True
+        print("💡 LED IS ON!")
+    else:
+        led.value = False
+        print("🌑 LED IS OFF!")
+
+io.on_message = message_received
+
+# Connect to the cloud!
 io.connect()
+
+# Tell the Pico to LISTEN to the 'led' feed from the website!
+io.subscribe(f"{GROUP_NAME}.led")
 
 
 # 🎮 ======================================================== 🎮
@@ -38,17 +65,13 @@ io.connect()
 # 🎮 ======================================================== 🎮
 
 # ⏱️ How many seconds should the Pico wait before sending data?
-# Try changing this to 15 or 5!
 SEND_INTERVAL = 10  
-
-# 📁 The name of your folder on Adafruit IO (Group Name)
-GROUP_NAME = "iot-adventure"
-
 last_send_time = 0
 
 while True:
     try:
-        io.loop() # This keeps the internet connection alive!
+        # This keeps the internet connection alive AND checks for incoming LED clicks!
+        io.loop() 
         
         # Is it time to send a message? (Stopwatch check)
         if (time.monotonic() - last_send_time) > SEND_INTERVAL:
@@ -65,7 +88,6 @@ while True:
             light_level = ldr.value
 
             # 🖨️ 2. PRINT TO THE SCREEN 
-            # (Hacker Mission: Change the fun words inside the quotes "")
             print("\n--- 🕵️‍♂️ SECRET AGENT DASHBOARD ---")
             
             if temperature is not None:
