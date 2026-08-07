@@ -205,7 +205,7 @@
         async function fetchData() {
             document.getElementById('tempVal').innerText = (await getFeedValue('iot-adventure.temperature')) + ' °C';
             document.getElementById('humVal').innerText = (await getFeedValue('iot-adventure.humidity')) + ' %';
-            document.getElementById('lightVal').innerText = await getFeedValue('iot-adventure.light');
+            document.getElementById('lightVal').innerText = (await getFeedValue('iot-adventure.light')) + ' %';
             
             const motion = await getFeedValue('iot-adventure.motion');
             document.getElementById('motionVal').innerText = motion == '1' ? '🚨 MOTION!' : 'Clear';
