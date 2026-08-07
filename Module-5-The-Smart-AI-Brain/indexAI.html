@@ -252,7 +252,7 @@
                 btn.classList.add('btn-off'); 
                 
                 fetchData(); // Fetch once immediately
-                timerID = setInterval(fetchData, 3000); 
+                timerID = setInterval(fetchData, 10000); 
             } else {
                 // 🔴 DISCONNECTING 🔴
                 isConnected = false;
