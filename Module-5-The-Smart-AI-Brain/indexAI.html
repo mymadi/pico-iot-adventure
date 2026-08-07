@@ -62,7 +62,13 @@
 
         .config-box input:focus { border-color: #3498db; }
 
-        /* ✨ AI Decision Box ✨ */
+        /* ✨ Make the new Refresh Rate box slightly smaller ✨ */
+        #refreshRate {
+            max-width: 100px;
+            flex: 0 1 100px;
+        }
+
+        /* AI Decision Box */
         .ai-box {
             background: #ffffff;
             padding: 25px;
@@ -74,7 +80,6 @@
             box-shadow: 0 10px 25px rgba(155, 89, 182, 0.2); 
         }
         
-        /* Gradient border for AI */
         .ai-box::before {
             content: '';
             position: absolute;
@@ -182,6 +187,7 @@
         @media (max-width: 600px) {
             .config-box { flex-direction: column; }
             .btn { width: 100%; }
+            #refreshRate { max-width: 100%; flex: 1 1 100%; }
         }
     </style>
 </head>
@@ -194,6 +200,10 @@
         <div class="config-box">
             <input type="text" id="username" placeholder="Adafruit Username">
             <input type="password" id="aioKey" placeholder="Adafruit AIO Key">
+            
+            <!-- ⏱️ NEW: Refresh Rate Input (Default is 5) -->
+            <input type="number" id="refreshRate" placeholder="Seconds" value="5" min="3" title="Refresh Rate in Seconds">
+            
             <button class="btn" id="connectBtn" onclick="toggleConnection()">Connect</button>
         </div>
 
@@ -239,6 +249,7 @@
             const btn = document.getElementById('connectBtn');
             const user = document.getElementById('username').value.trim();
             const key = document.getElementById('aioKey').value.trim();
+            const refreshInput = document.getElementById('refreshRate');
 
             if (!user || !key) {
                 alert("Hold on Hacker! Please enter your Username and Key first!");
@@ -246,18 +257,31 @@
             }
 
             if (isConnected === false) {
+                // ⏱️ Get the refresh rate from the box
+                let rateInSeconds = parseInt(refreshInput.value);
+                
+                // If they typed something broken or less than 3, force it back to 5
+                if (isNaN(rateInSeconds) || rateInSeconds < 3) {
+                    rateInSeconds = 5;
+                    refreshInput.value = 5;
+                }
+
                 // 🟢 CONNECTING 🟢
                 isConnected = true;
                 btn.innerText = "Disconnect";
                 btn.classList.add('btn-off'); 
+                refreshInput.disabled = true; // Lock the number box so it can't be changed mid-connection
                 
                 fetchData(); // Fetch once immediately
-                timerID = setInterval(fetchData, 10000); 
+                
+                // Convert seconds to milliseconds (e.g. 5 seconds = 5000 ms)
+                timerID = setInterval(fetchData, rateInSeconds * 1000); 
             } else {
                 // 🔴 DISCONNECTING 🔴
                 isConnected = false;
                 btn.innerText = "Connect";
                 btn.classList.remove('btn-off'); 
+                refreshInput.disabled = false; // Unlock the number box
                 
                 clearInterval(timerID); 
 
@@ -302,7 +326,7 @@
             const hum = await getFeedValue('iot-adventure.humidity');
             document.getElementById('humVal').innerText = hum !== '--' ? parseFloat(hum).toFixed(1) + ' %' : '-- %';
 
-            // ☀️ Fetch and format Light Level (1 decimal point & % sign)
+            // ☀️ Fetch and format Light Level
             const light = await getFeedValue('iot-adventure.light');
             document.getElementById('lightVal').innerText = light !== '--' ? parseFloat(light).toFixed(1) + ' %' : '--';
             
@@ -318,7 +342,7 @@
                 motionUI.classList.remove('alert-active');
             }
 
-            // ✨ NEW: Fetch the LED status so the button matches the AI! ✨
+            // ✨ Fetch the LED status so the button matches the AI! ✨
             const ledStatus = await getFeedValue('iot-adventure.led');
             const ledBtn = document.getElementById('lightBtn');
             
