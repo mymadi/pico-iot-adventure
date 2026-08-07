@@ -52,7 +52,7 @@ time.sleep(2)
 DARK_THRESHOLD = 30.0   # If light percentage is below 30%, it is "Dark"
 HOT_THRESHOLD = 28.0    # If temperature is above 28°C, it is "Hot"
 
-SEND_INTERVAL = 5       # Send data to dashboard every 5 seconds
+SEND_INTERVAL = 10       # Send data to dashboard every 10 seconds
 last_send_time = 0
 
 while True:
