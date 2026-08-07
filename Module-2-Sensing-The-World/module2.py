@@ -24,16 +24,18 @@ print("🤖 Robot Awake! Waiting for light...")
 
 # 🕵️‍♂️ HACKER MISSION: Find your perfect "Magic Number"!
 # Use your flashlight and your hand to test the light sensor. 
-# Change 30000 to the best number for your room.
-MAGIC_NUMBER = 30000
+# Change 50 to the best percentage for your room (0 to 100).
+MAGIC_NUMBER = 50 
 
 while True:
     
-    # 1. Read the light sensor (Flipping the numbers so more light = bigger number)
-    light_level = 65535 - ldr.value
+    # 1. Read the light sensor (Flipping the numbers and converting to percentage 0-100%)
+    inverted_value = 65535 - ldr.value
+    light_level = (inverted_value / 65535) * 100
     
-    print(f"☀️ Current Light Level is: {light_level}")
-    
+    # We use :.1f to round it to 1 decimal place (e.g., 45.2%)
+    print(f"☀️ Current Light Level is: {light_level:.1f}%")
+     
     # 2. The Robot's Brain (If / Else Decision)
     if light_level > MAGIC_NUMBER and is_open == False:
         # BRIGHT LIGHT DETECTED!
