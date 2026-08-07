@@ -54,7 +54,7 @@ Before we send data, we need to set up a folder (called a **Group**) in Adafruit
 Now that your Pico is online, let's have some fun! Scroll down in your `code.py` file until you see the game controllers `🎮 HACKER ZONE`. 
 
 Try these two Hacker Missions:
-1. **Speed it up!** Find `SEND_INTERVAL = 5`. This is a stopwatch that waits 5 seconds. Change it to `2` and run the code again. Watch how much faster the data flies!
+1. **Speed it up!** Find `SEND_INTERVAL = 10`. This is a stopwatch that waits 10 seconds. Change it to `5` and run the code again. Watch how much faster the data flies!
 2. **Change the text!** Find the print messages like `"🚨 Motion: INTRUDER DETECTED!!"`. Can you change it to say `"🚨 A MONSTER IS HERE!!"` or something silly?
 
 ---
