@@ -374,7 +374,7 @@
             // 🌡️ 1. DYNAMIC TEMPERATURE
             if (temp !== '--') {
                 const tempNum = parseFloat(temp);
-                document.getElementById('tempVal').innerText = tempNum + ' °C';
+                document.getElementById('tempVal').innerText = tempNum.toFixed(1) + ' °C';
                 
                 // Color changes based on heat
                 let tempColor = '#3498db'; // Cool Blue
@@ -402,7 +402,7 @@
             // 💧 2. DYNAMIC HUMIDITY GAUGE
             if (hum !== '--') {
                 const humNum = parseFloat(hum);
-                document.getElementById('humVal').innerText = humNum + ' %';
+                document.getElementById('humVal').innerText = humNum.toFixed(1) + ' %';
                 
                 let humColor = '#3498db'; // Default Blue
                 if (humNum > 70) humColor = '#8e44ad'; // High humidity Purple
