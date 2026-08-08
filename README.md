@@ -3,6 +3,7 @@
 [![Target Level](https://img.shields.io/badge/Level-Primary%20%26%20Secondary%20School-orange.svg)](#)
 [![Platform](https://img.shields.io/badge/Board-Raspberry%20Pi%20Pico%20W-red.svg)](https://www.raspberrypi.com/products/raspberry-pi-pico/)
 [![Language](https://img.shields.io/badge/Language-CircuitPython-blue.svg)](https://circuitpython.org/)
+[![Language](https://img.shields.io/badge/Language-HTML-green.svg)](#)
 [![Broker](https://img.shields.io/badge/MQTT-Adafruit%20IO-black.svg)](https://io.adafruit.com/)
 [![Edge AI](https://img.shields.io/badge/AI-Edge%20AI-purple.svg)](#)
 
