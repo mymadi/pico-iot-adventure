@@ -72,7 +72,7 @@ This course is structured into **5 sequential modules**. Click any module link b
 3. **[Adafruit IO Account](https://io.adafruit.com/):** Free MQTT cloud service for storing and visualizing sensor data.
 
 ### 📚 Required CircuitPython Libraries
-To make all the sensors and cloud features work properly, you must download the **[CircuitPython Library Bundle](https://circuitpython.org/libraries)**. Make sure to download the version that matches your installed CircuitPython (e.g., 8.x or 9.x).
+To make all the sensors and cloud features work properly, you must download the **[CircuitPython Library Bundle](https://circuitpython.org/libraries)**. Make sure to download the version that matches your installed CircuitPython (e.g., 9.x or 10.x).
 
 Extract the `.zip` file you downloaded and copy the following files/folders directly into the **`lib`** folder on your **`CIRCUITPY`** drive:
 
