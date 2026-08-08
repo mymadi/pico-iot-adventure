@@ -71,6 +71,21 @@ This course is structured into **5 sequential modules**. Click any module link b
 2. **[CircuitPython UF2](https://circuitpython.org/board/raspberry_pi_pico_w/):** Firmware installed on the Raspberry Pi Pico W.
 3. **[Adafruit IO Account](https://io.adafruit.com/):** Free MQTT cloud service for storing and visualizing sensor data.
 
+### 📚 Required CircuitPython Libraries
+To make all the sensors and cloud features work properly, you must download the **[CircuitPython Library Bundle](https://circuitpython.org/libraries)**. Make sure to download the version that matches your installed CircuitPython (e.g., 8.x or 9.x).
+
+Extract the `.zip` file you downloaded and copy the following files/folders directly into the **`lib`** folder on your **`CIRCUITPY`** drive:
+
+* ⚙️ **`adafruit_motor`** (Folder) - Controls the servo motor.
+* 🌡️ **`adafruit_dht`** (Folder or `.mpy`) - Reads the temperature and humidity sensor.
+* 📡 **`adafruit_minimqtt`** (Folder) - The core engine that sends messages to the cloud.
+* ☁️ **`adafruit_io`** (Folder) - Connects specifically to Adafruit IO dashboards.
+* 🔌 **`adafruit_connection_manager.mpy`** (File) - *Required helper for Wi-Fi sockets.*
+* ⏱️ **`adafruit_ticks.mpy`** (File) - *Required helper for timing tasks without freezing.*
+
+> [!WARNING]
+> **Important:** If you miss `adafruit_connection_manager.mpy` or `adafruit_ticks.mpy`, your code will crash when trying to connect to the internet!
+
 ---
 
 ## 🚀 Quick Setup Instructions
@@ -80,5 +95,5 @@ This course is structured into **5 sequential modules**. Click any module link b
 
 1. Clone or download this repository to your computer.
 2. Open **Thonny IDE** and select the interpreter: **CircuitPython (Generic)**.
-3. Plug in your Raspberry Pi Pico W via Micro-USB.
+3. Plug in your Raspberry Pi Pico W via Micro-USB and upload the required libraries to the `lib` folder.
 4. Watch the [Getting Started Video](https://www.youtube.com/watch?v=56N_8FI_WLU) and dive into **[Module 1](./Module-1-Hello-Brain)**!
