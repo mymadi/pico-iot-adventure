@@ -8,7 +8,7 @@ This is the final step! We have built our hardware and connected it to the inter
 ## 🛠️ What You Need
 * A computer with a web browser (Chrome, Edge, Safari).
 * Your Pico W powered on and connected to WiFi from Module 3.
-* Your Adafruit Username and Adafruit AIO Key (The long secret password!).
+* Your Adafruit Username and Adafruit AIO Key (The long secret password!). 
 
 ## 💻 Your Mission
 1. In this folder, you will find **TWO** website files. Choose your level:
