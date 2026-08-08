@@ -12,7 +12,7 @@ It is time to put the "Internet" into our Internet of Things (IoT) project! We a
 * **1x Raspberry Pi Pico W**
 * **1x DHT22 Sensor** (Temperature & Humidity)
 * **1x PIR Sensor** (Motion Detector for security/pest control!)
-* *(Don't forget to keep your LED and Light Sensor plugged in from Modules 1 & 2!)*
+* *(Don't forget to keep your LED and Light Sensor plugged in from Modules 1 & 2!)* 
 
 ---
 
