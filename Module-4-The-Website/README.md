@@ -2,7 +2,6 @@
 
 <img src="https://github.com/mymadi/pico-iot-adventure/blob/main/Module-4-The-Website/Smart_Control_Center_Launch_Guide.png?raw=true" width="800">
 
-
 This is the final step! We have built our hardware and connected it to the internet. Now, we are going to build a custom website (Dashboard) that you can open on your computer to monitor your Bedroom or Farm from anywhere in the world!
 
 ## 🛠️ What You Need
@@ -25,3 +24,11 @@ Websites are built using a language called HTML. Let's hack it!
 2. Look for the `<h1>` tag near the top of the code. 
 3. Can you change the title from "IoT Dashboard" to "My Awesome Smart Bedroom" or "Super Tech Farm"? 
 4. Save the file, refresh your web browser, and look at your new custom title!
+
+## 🤖 AI Co-Pilot Challenge
+Want to customize your dashboard even more but don't know how to code in HTML or CSS? We've got you covered! 
+
+1. Open the **`prompt.md`** file included in this folder. 
+2. Inside, you will find sample AI Prompts. 
+3. Copy and paste these prompts into an AI assistant (like ChatGPT, Gemini, or Claude). 
+4. Let the AI act as your personal coding assistant to magically change your dashboard's colors, add new buttons, or completely redesign the page!
