@@ -1,7 +1,6 @@
 # 🧠 Module 5: The Smart AI Brain (Autonomous Mode)
 
-<img src="https://github.com/mymadi/pico-iot-adventure/blob/main/Module-3-Going-Online/IoT_Hardware_to_Cloud_Journey.png?raw=true" width="800">
-
+<img src="https://github.com/mymadi/pico-iot-adventure/blob/main/Module-5-The-Smart-AI-Brain/Building_Autonomous_Edge_AI_Systems.png?raw=true" width="800">
 Welcome to your final mission! Until now, your Raspberry Pi Pico W has been a "puppet"—it just sends data to the cloud and waits for a human to click a button to move a motor or turn on a light. 
 
 **Today, we cut the strings.** You are going to code an **"Expert System"** (a form of Edge AI). Your Pico W will now look at its sensor data, combine the information using Boolean Logic, and make its own decisions instantly—all while keeping your web dashboard updated in real-time!
