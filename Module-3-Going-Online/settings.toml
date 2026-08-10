@@ -5,6 +5,3 @@ CIRCUITPY_WIFI_PASSWORD = "Your_WiFi_Password"
 # Adafruit IO Credentials
 ADAFRUIT_AIO_USERNAME = "Your_Adafruit_Username"
 ADAFRUIT_AIO_KEY = "Your_Adafruit_IO_Key"
-
-# Mosquitto MQTT
-MQTT_BROKER_IP = "192.168.1.100"  # Replace with your actual PC IP address
