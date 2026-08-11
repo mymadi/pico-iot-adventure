@@ -14,7 +14,7 @@ Now that our brain is awake, we need to give it "eyes" and "muscles"! In this mo
 
 ## 🔌 Wiring Guide
 * **LDR:** Connect to **GP26** (Analog pin to measure light levels).
-* **Servo:** Connect the orange (signal) wire to **GP16**, red to **VBUS** (5V), and brown to **GND**.
+* **Servo:** Connect the orange (signal) wire to **GP16**, red to 3.3V or **VBUS** (5V), and brown to **GND**.
 
 ## 💻 Your Mission
 1. Make sure your Pico has the `adafruit_motor` folder in its `lib` drive.
